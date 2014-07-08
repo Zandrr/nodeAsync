@@ -3,9 +3,21 @@ var http = require('http');
 var request = require('request');
 
 
-function data(file){
+function text(file){
   fs.readFile(file, 'utf8', function(err, data){
-    return data;
+    var options = {
+      url: "https://yoda.p.mashape.com/yoda",
+      method: "GET",
+      json: true,
+      headers: {
+          "X-Mashape-Authorization": "kSjY9dDW21mshGVQgEXOa3nfu7hip1iRURXjsnQGMFF9rmFL5k"
+        },
+      qs: {sentence: data }
+    }
+    var callback = function(err, res, body){
+      console.log(body);
+    }
+      request(options, callback);
   });
 }
 
@@ -15,12 +27,7 @@ function appendToFile(file,text){
   });
 }
 
-var options = {
-  url: "https://yoda.p.mashape.com/yoda",
-  method: "GET",
-  json: true,
-  headers: {
-      "X-Mashape-Authorization": "kSjY9dDW21mshGVQgEXOa3nfu7hip1iRURXjsnQGMFF9rmFL5k"
-    },
-}
-data('./test.txt');
+
+
+
+text('./test.txt');
