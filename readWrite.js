@@ -2,11 +2,11 @@ var fs = require('fs');
 
 function readWrite(file, text){
   fs.readFile(file, 'utf8', function(err, data){
-    fs.appendFile(file, text, function(err,data){
-      console.log('appended '+ text + ' to '+ file);
+    fs.writeFile(file, data+text, function(err,data){
+      console.log('wrote '+ text + ' to '+ file);
     });
   });
 }
 
 
-readWrite('./test.txt', ' appened content');
+readWrite('./test.txt', ' new content');
