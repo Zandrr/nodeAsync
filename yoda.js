@@ -1,9 +1,10 @@
-var fs = require('fs');
-var http = require('http');
-var request = require('request');
+var fs      = require('fs');
+    http    = require('http');
+    request = require('request');
+    q       = require('q');
 
 
-function text(file){
+function readWrite(file){
   fs.readFile(file, 'utf8', function(err, data){
     var options = {
       url: "https://yoda.p.mashape.com/yoda",
@@ -14,20 +15,14 @@ function text(file){
         },
       qs: {sentence: data }
     }
-    var callback = function(err, res, body){
-      console.log(body);
-    }
-      request(options, callback);
+    request(options, function(err,res,body){
+      fs.writeFile(file, data+res.body, function(err){
+      console.log('data is' + data);
+    });
   });
-}
-
-function appendToFile(file,text){
-  fs.appendFile(file, text, function(err,data){
-    console.log('appended '+ text + ' to '+ file);
+ 
   });
 }
 
 
-
-
-text('./test.txt');
+readWrite('./test.txt');
